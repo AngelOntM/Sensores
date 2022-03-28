@@ -14,6 +14,7 @@ class Sensores(JsonFile):
         self.created_at = created_at
         self.updated_at = updated_at
         self.lista = lista
+        super().__init__()
 
     def agregar(self, sensor):
         self.lista.append(sensor)
@@ -26,6 +27,10 @@ class Sensores(JsonFile):
 
     def getlist(self):
         return self.lista
+
+    def __str__(self):
+        return str(self.id) + ' \t\t' + str(self.clave) + ' \t\t\t' + str(self.isActive) + ' \t\t\t' + \
+               str(self.seccion) + ' \t\t\t' + str(self.invernadero)
 
     def toObjects(self):
         lista = list()
@@ -45,39 +50,39 @@ class Sensores(JsonFile):
         else:
             return False
 
-    def MyCol(self, coleccion):
+    def MyCol(self):
         x = self.verificarDB()
         if x == True:
-            y = self.DB(coleccion)
+            y = self.DB()
             return y
         else:
-            y = self.DBLocal(coleccion)
+            y = self.DBLocal()
             return y
 
-    def DBLocal(self, coleccion):
+    def DBLocal(self):
         myclient = pymongo.MongoClient(
             'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false')
         mydb = myclient['proyecto']
-        mycol = mydb[coleccion]
+        mycol = mydb['Sensores']
         return mycol
 
-    def DB(self, coleccion):
+    def DB(self):
         myclient = pymongo.MongoClient(
             'mongodb+srv://admin:admin@sensores.gr9v5.mongodb.net/proyecto?retryWrites=true&w=majority')
         mydb = myclient['proyecto']
-        mycol = mydb[coleccion]
+        mycol = mydb['Sensores']
         return mycol
 
-    def SincronizarDB(self, coleccion):
-        mycol = self.DB(coleccion)
+    def SincronizarDB(self):
+        mycol = self.MyCol()
         data = self.getDataJson()
         for x in data:
             mycol.insert_one(x)
         data = []
         self.toJson(data)
 
-    def AgregarDB(self, coleccion, dato):
-        mycol = self.DB(coleccion)
+    def AgregarDB(self, dato):
+        mycol = self.MyCol()
         mycol.insert_one(dato)
 
     def __iter__(self):

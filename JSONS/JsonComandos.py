@@ -4,7 +4,7 @@ import json
 
 class JsonFile:
     def __init__(self):
-        self.filename = "Sensores.json"
+        self.filename = "JSONS/Sensores.json"
 
     def getDataJson(self):
         data = []
