@@ -12,78 +12,14 @@
         "data": [
             {
                 "id": 0,
-                "fecha": "2022/03/28",
-                "hora": "13:25:07",
-                "valor": 5,
-                "medida": "M",
-                "nombre": "US",
-                "save": true
-            },
-            {
-                "id": 1,
-                "fecha": "2022/03/28",
-                "hora": "13:25:07",
+                "fecha": "2022/04/03",
+                "hora": "18:27",
                 "valor": 5,
                 "medida": "M",
                 "nombre": "US",
                 "save": true
             }
         ],
-        "created_at": "2022/03/28  12:22:38",
-        "updated_at": "2022/03/28  12:22:38",
-        "lista": [],
-        "filename": "JSONS/Sensores.json"
-    },
-    {
-        "id": 1,
-        "pines": [
-            3
-        ],
-        "clave": "IR",
-        "isActive": true,
-        "seccion": 1,
-        "invernadero": 1,
-        "data": [
-            {
-                "id": 0,
-                "fecha": "2022/03/28",
-                "hora": "12:38:00",
-                "valor": 3,
-                "medida": "Persona",
-                "nombre": "IR",
-                "save": true
-            },
-            {
-                "id": 1,
-                "fecha": "2022/03/28",
-                "hora": "13:27:34",
-                "valor": 3,
-                "medida": "Persona",
-                "nombre": "IR",
-                "save": true
-            },
-            {
-                "id": 2,
-                "fecha": "2022/03/28",
-                "hora": "13:27:55",
-                "valor": 3,
-                "medida": "Persona",
-                "nombre": "IR",
-                "save": true
-            },
-            {
-                "id": 3,
-                "fecha": "2022/03/28",
-                "hora": "13:53:56",
-                "valor": 3,
-                "medida": "Persona",
-                "nombre": "IR",
-                "save": true
-            }
-        ],
-        "created_at": "2022/03/28  12:22:38",
-        "updated_at": "2022/03/28  12:22:38",
-        "lista": [],
-        "filename": "JSONS/Sensores.json"
-    }
-]
+        "created_at": "2022/04/03  18:14:57",
+        "updated_at": "2022/04/03  18:14:57",
+        "save": 

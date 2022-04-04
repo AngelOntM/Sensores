@@ -28,4 +28,4 @@ class LeerSensores:
         print('3) Fotoresistencia')
         print('4) Humedad del suelo')
         print('5) Humo')
-        print('6) Proximidad')
+        print('6) Ultrasonico')
