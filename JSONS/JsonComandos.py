@@ -17,6 +17,10 @@ class JsonFile:
         file = open(self.filename, "w")
         file = json.dump([ob.__dict__ for ob in lista], file, indent=4)
 
+    def toJsonApi(self, lista):
+        file = open(self.filename, "w")
+        file = json.dump([ob for ob in lista], file, indent=4)
+
     def getInfoJson(self):
         data = {}
         if (os.path.isfile(self.filename)):

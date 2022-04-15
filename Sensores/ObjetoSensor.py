@@ -1,9 +1,10 @@
 from JSONS.JsonComandos import JsonFile
 import pymongo
-
+import requests
+from requests.structures import CaseInsensitiveDict
 
 class Sensores(JsonFile):
-    def __init__(self, id='', created_at='', updated_at='', pines=[], data=[], clave='', isActive=bool, seccion='', invernadero=1, save=bool, lista=list()):
+    def __init__(self, id='', created_at='', updated_at='', pines=[], data=[], clave='', isActive=bool, seccion='', invernadero=1, store=bool, lista=list()):
         self.id = id
         self.pines = pines
         self.clave = clave
@@ -13,7 +14,7 @@ class Sensores(JsonFile):
         self.data = data
         self.created_at = created_at
         self.updated_at = updated_at
-        self.save = save
+        self.store = store
         self.lista = lista
         super().__init__()
 
@@ -30,7 +31,7 @@ class Sensores(JsonFile):
         return self.lista
 
     def __str__(self):
-        return str(self.id) + ' \t\t' + str(self.clave) + ' \t\t\t' + str(self.isActive) + ' \t\t\t' + \
+        return str(self.clave) + ' \t\t\t' + str(self.isActive) + ' \t\t\t' + \
                str(self.seccion) + ' \t\t\t' + str(self.invernadero)
 
     def toObjects(self):
@@ -38,59 +39,77 @@ class Sensores(JsonFile):
         data1 = self.getDataJson()
         for x in data1:
             lista.append(
-                Sensores(id=x['id'], pines=x['pines'], clave=x['clave'], isActive=x['isActive'], seccion=x['seccion'], invernadero=x['invernadero'], data=x['data'], created_at=x['created_at'], updated_at=x['updated_at']))
+                Sensores(id=x['id'], pines=x['pines'], clave=x['clave'], isActive=x['isActive'], data=x['data'], seccion=x['seccion'], invernadero=x['invernadero'], store=x['store'], created_at=x['created_at'], updated_at=x['updated_at']))
         self.lista = lista
 
-    def verificarDB(self):
+    def apiGet(self):
         try:
-            pymongo.MongoClient(
-                'mongodb+srv://admin:admin@sensores.gr9v5.mongodb.net/proyecto?retryWrites=true&w=majority')
-            return True
-        except pymongo.errors.ConnectionFailure:
+            path = "http://3.87.205.61:3333/sensores"
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            resp = requests.get(path, headers=headers)
+            return resp.json()
+        except:
+            return 'Fail'
+
+    def apiPost(self,data):
+        try:
+            path = "http://3.87.205.61:3333/sensores"
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            resp = requests.post(path, data=data, headers=headers)
+            return resp.json()
+        except:
+            return 'Fail'
+
+    def apiPut(self, id,data):
+        try:
+            path = f"http://3.87.205.61:3333/sensores/{id}"
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            resp = requests.put(path, data=data, headers=headers)
+            print(resp.json())
+            return resp.json()
+        except:
+            return 'Fail'
+
+    def apiDelete(self, id):
+        try:
+            path = f"http://3.87.205.61:3333/sensores/{id}"
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            resp = requests.delete(path, headers=headers)
+            return resp.json()
+        except:
+            return 'Fail'
+
+    def apiPutData(self,id,data):
+        try:
+            path = f"http://3.87.205.61:3333/data/{id}"
+            headers = CaseInsensitiveDict()
+            headers["Accept"] = "application/json"
+            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            resp = requests.put(path, data=data, headers=headers)
+            print(resp.json())
+            return resp.json()
+        except:
+            return 'Fail'
+
+    def Sincronizar(self):
+        try:
+            find = self.apiGet()
+            self.toJsonApi(find['find'])
+            self.toObjects()
+        except:
             return False
-        except pymongo.errors.ConfigurationError:
-            return False
 
-    def MyCol(self):
-        x = self.verificarDB()
-        if x == True:
-            y = self.DB()
-            return y
-        else:
-            y = self.DBLocal()
-            return y
-
-    def DBLocal(self):
-        myclient = pymongo.MongoClient('localhost:27017')
-        mydb = myclient['proyecto']
-        mycol = mydb['sensores']
-        return mycol
-
-    def DB(self):
-        myclient = pymongo.MongoClient(
-            'mongodb+srv://admin:admin@sensores.gr9v5.mongodb.net/proyecto?retryWrites=true&w=majority')
-        mydb = myclient['proyecto']
-        mycol = mydb['sensores']
-        return mycol
-
-    def SincronizarDB(self):
-        mycol = self.MyCol()
-        for x in self.lista:
-            m = mycol.find_one({'id': x.id})
-            if m == None:
-                mycol.insert_one(x.__dict__)
-
-    def SincronizarDatosDB(self):
-        mycol = self.MyCol()
-        for x in self.lista:
-            m = mycol.find_one({'id': x.id})
-            for y in m['data']:
-                print(y)
-
-
-    def getDataMongo(self):
+    def getDataApi(self):
         lista = list()
-        mycol = self.MyCol()
+        mycol = self.apiGet()
         data = mycol.find()
         for x in data:
             lista.append(
@@ -98,24 +117,6 @@ class Sensores(JsonFile):
                          invernadero=x['invernadero'], data=x['data'], created_at=x['created_at'],
                          updated_at=x['updated_at']))
         self.lista = lista
-
-    def AgregarDB(self, dato):
-        myloc= self.DBLocal()
-        mycol = self.MyCol()
-        if myloc == mycol:
-            dato['save']=False
-            myloc.insert_one(dato)
-        else:
-            mycol.insert_one(dato)
-
-    def EliminarDB(self, id):
-        myloc = self.DBLocal()
-        mycol = self.MyCol()
-
-#asdasd
-    def AgregarDato(self, id, dato):
-        mycol = self.MyCol()
-        mycol.update_one({'id':id},{'$push':{'data':dato.__dict__}},True)
 
     def __iter__(self):
         self.__idx__ = 0
@@ -128,3 +129,19 @@ class Sensores(JsonFile):
             return x
         else:
             raise StopIteration
+
+    def Verificar(self):
+        for x in self.lista:
+            if x.store == False:
+                try:
+                    path = f"http://3.87.205.61:3333/sensores/{x.id}"
+                    headers = CaseInsensitiveDict()
+                    headers["Accept"] = "application/json"
+                    headers[
+                        "Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+                    resp = requests.put(path,data=x, headers=headers)
+                except:
+                    print('Fail')
+                    return 'Fail'
+        self.Sincronizar()
+

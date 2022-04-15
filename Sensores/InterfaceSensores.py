@@ -1,4 +1,3 @@
-import time
 from Sensores.ObjetoSensor import Sensores
 from Sensores.Data import DataSensor
 from Sensores.Sensores import LeerSensores
@@ -10,8 +9,7 @@ class InterfaceSensor:
     def __init__(self):
         self.leerSensores = LeerSensores()
         self.objetoSensor = Sensores()
-        self.objetoData = DataSensor()
-        self.objetoSensor.getDataMongo()
+        self.objetoSensor.toObjects()
         self.date = datetime.datetime.now()
 
     def cls(self):
@@ -24,11 +22,10 @@ class InterfaceSensor:
         print('1) Temperatura y Humedad')
         print('2) Infrarrojo')
         print('3) Fotoresistencia')
-        print('4) Humedad del suelo')
-        print('5) Humo')
-        print('6) Ultrasonico')
+        print('4) Humo')
+        print('5) Ultrasonico')
         valor = int(input('Selecciona el sensor:'))
-        if valor != 6:
+        if valor != 5:
             lpines = self.agregarPines(1)
         else:
             lpines = self.agregarPines(2)
@@ -40,22 +37,21 @@ class InterfaceSensor:
         elif valor == 3:
             sensor.clave = 'FR'
         elif valor == 4:
-            sensor.clave = 'HS'
+            sensor.clave = 'HG'
         elif valor == 5:
-            sensor.clave = 'GH'
-        elif valor == 6:
             sensor.clave = 'US'
-        sensor.isActive = True
+        sensor.isActive = 'true'
         sensor.seccion = int(input('Seleccione la seccion (1):'))
         sensor.created_at = self.date.strftime('%Y/%m/%d  %X')
         sensor.updated_at = self.date.strftime('%Y/%m/%d  %X')
-        sensor.save=True
+        sensor.store = False
         return sensor
 
     def agregarPines(self, tipo):
-        pines = []
+        pines = list()
         if tipo == 1:
             pines.append(int(input('Escribe el pin:')))
+            pines.append(0)
             return pines
         elif tipo == 2:
             pines.append(int(input('Escribe el pin 1 (ECHO):')))
@@ -73,19 +69,29 @@ class InterfaceSensor:
             if sensor.clave == 'US':
                 sensor.pines = self.agregarPines(2)
                 sensor.updated_at = self.date.strftime('%Y/%m/%d  %X')
+                sensor.store = False
+                sensor.isActive = str(sensor.isActive).lower()
+
             else:
                 sensor.pines = self.agregarPines(1)
                 sensor.updated_at = self.date.strftime('%Y/%m/%d  %X')
+                sensor.store = False
+                sensor.isActive = str(sensor.isActive).lower()
+            self.objetoSensor.apiPut(sensor.id, sensor.__dict__)
         elif dato1 == 2:
             sensor.seccion = int(input('Seleccione la seccion (1):'))
             sensor.updated_at = self.date.strftime('%Y/%m/%d  %X')
+            sensor.store = False
+            sensor.isActive = str(sensor.isActive).lower()
+            self.objetoSensor.apiPut(sensor.id, sensor.__dict__)
         else:
             print('Opcion no valida')
 
     def EliminarSensor(self):
         self.VerSensores()
         dato = int(input('Escribe el id del sensor:'))
-        self.objetoSensor.eliminar(dato)
+        self.objetoSensor.apiDelete(dato)
+        self.objetoSensor.eliminar(self.objetoSensor.getlist()[dato])
 
     def VerSensores(self, lista=None):
         self.cls()
@@ -96,21 +102,29 @@ class InterfaceSensor:
             mylista = lista
         print("Id" + "\t\t" + 'Clave' + '\t\t' +
               'isActive' + "\t\t" + 'Seccion' + "\t\t" + 'Invernadero')
+        i = 0
         for p in mylista:
-            print(str(p))
+            print(str(i) + ' \t\t' + str(p))
+            i += 1
 
     def ActivarTodos(self):
         print('1) Activar Todos')
         print('2) Desactivar Todos')
+        print('3) Regresar')
         dato = int(input('Escribe la opcion:'))
         if dato == 1:
-            lista = self.objetoSensor.getlist()
-            for x in lista:
-                x.isActive = True
+            for x in self.objetoSensor:
+                x.isActive = 'true'
+                x.store = False
+                self.objetoSensor.apiPut(x.id, x.__dict__)
         elif dato == 2:
-            lista = self.objetoSensor.getlist()
-            for x in lista:
-                x.isActive = False
+            for x in self.objetoSensor:
+                print(x)
+                x.isActive = 'false'
+                x.store = False
+                self.objetoSensor.apiPut(x.id, x.__dict__)
+        elif dato == 3:
+            pass
         else:
             input('Opcion no valida')
 
@@ -118,54 +132,115 @@ class InterfaceSensor:
         self.VerSensores()
         dato = int(input('Escribe el id del sensor:'))
         x = self.objetoSensor.getlist()[dato]
-        x.isActive = True
+        x.isActive = 'true'
+        x.store = False
+        self.objetoSensor.apiPut(x.id, x.__dict__)
 
     def DesactivarUno(self):
         self.VerSensores()
         dato = int(input('Escribe el id del sensor:'))
         x = self.objetoSensor.getlist()[dato]
-        x.isActive = False
+        x.isActive = 'false'
+        x.store = False
+        self.objetoSensor.apiPut(x.id, x.__dict__)
 
     def Verificar(self):
         sensores = self.objetoSensor.getlist()
-        y = 0
-        for x in sensores:
-            if x.isActive == True:
-                self.Medicion(x)
-
-    def Medicion(self, sensor):
-        dataObjeto = DataSensor()
-        ultimo = len(sensor.data)
-        if sensor.clave == 'IR':
-            dataObjeto.valor = self.leerSensores.IR(sensor.pines)
-            if dataObjeto.valor != None:
-                dataObjeto.id = ultimo
-                dataObjeto.fecha = self.date.strftime('%Y/%m/%d')
-                dataObjeto.hora = self.date.strftime('%H:%M')
-                dataObjeto.medida = 'Persona'
-                dataObjeto.nombre = 'IR'
-                dataObjeto.save = True
-                sensor.data.append(dataObjeto.__dict__)
-                print(dataObjeto.valor)
-                self.objetoSensor.AgregarDato(sensor.id,dataObjeto.__dict__)
-        elif sensor.clave == 'US':
-            if int(self.date.strftime('%I')) == 12 and sensor.data[-1].hora != self.date.strftime('%H:%M'):
-                dataObjeto.valor = self.leerSensores.US(sensor.pines)
-                dataObjeto.id = ultimo
-                dataObjeto.fecha = self.date.strftime('%Y/%m/%d')
-                dataObjeto.hora = self.date.strftime('%H:%M')
-                dataObjeto.medida = 'M'
-                dataObjeto.nombre = 'US'
-                dataObjeto.save = True
-                sensor.data.append(dataObjeto.__dict__)
-                print(dataObjeto.valor)
-                self.objetoSensor.AgregarDato(sensor.id, dataObjeto)
+        while True:
+            for x in sensores:
+                if x.isActive == True:
+                    dataObjeto = DataSensor()
+                    date = datetime.datetime.now()
+                    ultimo = len(x.data)
+                    if ultimo == 0:
+                        x.data.append({'hora': 0})
+                    if x.clave == 'IR':
+                        dataObjeto.valor = self.leerSensores.IR(x.pines)
+                        if dataObjeto.valor != None:
+                            dataObjeto.id = ultimo
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = 'Persona'
+                            dataObjeto.nombre = 'IR'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                    elif x.clave == 'US':
+                        if int(date.strftime('%I')) == 12 and x.data[-1]['hora'] != date.strftime('%H:%M'):
+                            dataObjeto.valor = self.leerSensores.US(x.pines)
+                            dataObjeto.id = ultimo
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = 'M'
+                            dataObjeto.nombre = 'US'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                    elif x.clave == 'FR':
+                        if (int(date.strftime('%M')) + 5) % 5 == 0 and x.data[-1]['hora'] != date.strftime('%H:%M'):
+                            dataObjeto.valor = self.leerSensores.FR(x.pines)
+                            dataObjeto.id = ultimo
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = 'O'  #################
+                            dataObjeto.nombre = 'FR'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                    elif x.clave == 'HG':
+                        dataObjeto.valor = self.leerSensores.HG(x.pines)
+                        if dataObjeto.valor != None:
+                            dataObjeto.id = ultimo
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = 'Humo'  #################
+                            dataObjeto.nombre = 'HG'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                    elif x.clave == 'TH':
+                        if (int(date.strftime('%M')) + 5) % 5 == 0 and x.data[-1]['hora'] != date.strftime('%H:%M'):
+                            valores = self.leerSensores.TH(x.pines)
+                            dataObjeto.valor = valores[0]
+                            dataObjeto.id = ultimo
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = 'C'
+                            dataObjeto.nombre = 'TM'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                            dataObjeto.valor = valores[1]
+                            dataObjeto.id = ultimo + 1
+                            dataObjeto.fecha = date.strftime('%Y/%m/%d')
+                            dataObjeto.hora = date.strftime('%H:%M')
+                            dataObjeto.medida = '%'
+                            dataObjeto.nombre = 'HM'
+                            dataObjeto.store = 'false'
+                            x.data.append(dataObjeto.__dict__)
+                            x.store = False
+                            print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
+                            self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
+                        if ultimo == 0:
+                            x.data.remove([0])
+                self.objetoSensor.toJson(self.objetoSensor)
 
     def menuPrincipal(self):
         a = ""
         while a != "x":
             self.cls()
-            self.objetoSensor.SincronizarDB()
+            self.objetoSensor.Verificar()
+            self.objetoSensor.toObjects()
             print("\n" + "-" * 10 + "Menu Principal" + "-" * 10)
             print("a) Agregar Sensor")
             print("b) Ver Sensores")
@@ -180,25 +255,32 @@ class InterfaceSensor:
             if (a.lower() == 'a'):
                 s = self.AgregarSensor()
                 self.objetoSensor.agregar(s)
-                self.objetoSensor.AgregarDB(s.__dict__)
+                self.objetoSensor.toJson(self.objetoSensor)
+                self.objetoSensor.apiPost(s.__dict__)
             elif (a.lower() == 'b'):
                 self.VerSensores()
             elif (a.lower() == 'c'):
                 self.ActivarTodos()
+                self.objetoSensor.toJson(self.objetoSensor)
                 pass
             elif (a.lower() == 'd'):
                 self.ActivarUno()
+                self.objetoSensor.toJson(self.objetoSensor)
                 pass
             elif (a.lower() == 'e'):
                 self.DesactivarUno()
+                self.objetoSensor.toJson(self.objetoSensor)
                 pass
             elif (a.lower() == 'f'):
                 self.ModificarSensor()
+                self.objetoSensor.toJson(self.objetoSensor)
                 pass
             elif (a.lower() == 'g'):
                 self.EliminarSensor()
+                self.objetoSensor.toJson(self.objetoSensor)
                 pass
             elif (a.lower() == 'h'):
+                self.objetoSensor.toJson(self.objetoSensor)
                 self.Verificar()
                 pass
             elif (a == 'x'):

@@ -8,24 +8,22 @@ class LeerSensores:
     def TH(self,pin):
         a = 1
         b = 2
-        return a,b
+        valor = [a,b]
+        return valor
 
     def IR(self,pin):
-        a=3
-        return a
+        valor=3
+        return valor
+
+    def HG(self,pin):
+        valor=3
+        return valor
 
     def FR(self,pin):
-        a=4
-        return 1
+        valor=4
+        return valor
 
     def US(self,pin):
-        a=5
-        return a
+        valor=5
+        return valor
 
-    def VerListaSensores(self):
-        print('1) Temperatura y Humedad')
-        print('2) Infrarrojo')
-        print('3) Fotoresistencia')
-        print('4) Humedad del suelo')
-        print('5) Humo')
-        print('6) Ultrasonico')

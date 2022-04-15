@@ -1,9 +1,152 @@
 [
     {
+        "_id": "6258a9ac9737ade02770f89c",
         "id": 0,
         "pines": [
             1,
-            2
+            0
+        ],
+        "clave": "TH",
+        "isActive": true,
+        "seccion": 1,
+        "invernadero": 1,
+        "data": [
+            {
+                "id": 0,
+                "fecha": "2022/04/14",
+                "hora": "23:50",
+                "valor": 1,
+                "medida": "C",
+                "nombre": "TM",
+                "save": true
+            },
+            {
+                "id": 1,
+                "fecha": "2022/04/14",
+                "hora": "23:50",
+                "valor": 2,
+                "medida": "%",
+                "nombre": "HM",
+                "save": true
+            },
+            {
+                "id": 2,
+                "fecha": "2022/04/14",
+                "hora": "23:55",
+                "valor": 1,
+                "medida": "C",
+                "nombre": "TM",
+                "save": true
+            },
+            {
+                "id": 3,
+                "fecha": "2022/04/14",
+                "hora": "23:55",
+                "valor": 2,
+                "medida": "%",
+                "nombre": "HM",
+                "save": true
+            },
+            {
+                "id": 4,
+                "fecha": "2022/04/15",
+                "hora": "00:00",
+                "valor": 1,
+                "medida": "C",
+                "nombre": "TM",
+                "save": true
+            },
+            {
+                "id": 5,
+                "fecha": "2022/04/15",
+                "hora": "00:00",
+                "valor": 2,
+                "medida": "%",
+                "nombre": "HM",
+                "save": true
+            }
+        ],
+        "created_at": "2022-04-14T23:09:32.492Z",
+        "updated_at": "2022-04-14T23:09:32.492Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6258a9af9737ade02770f8a0",
+        "id": 1,
+        "pines": [
+            2,
+            0
+        ],
+        "clave": "IR",
+        "isActive": false,
+        "seccion": 1,
+        "invernadero": 1,
+        "data": [],
+        "created_at": "2022-04-14T23:09:35.929Z",
+        "updated_at": "2022-04-14T23:10:01.855Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6258a9b49737ade02770f8a4",
+        "id": 2,
+        "pines": [
+            3,
+            0
+        ],
+        "clave": "FR",
+        "isActive": true,
+        "seccion": 1,
+        "invernadero": 1,
+        "data": [
+            {
+                "id": 1,
+                "fecha": "2022/04/14",
+                "hora": "23:55",
+                "valor": 4,
+                "medida": "O",
+                "nombre": "FR",
+                "save": true
+            },
+            {
+                "id": 2,
+                "fecha": "2022/04/15",
+                "hora": "00:00",
+                "valor": 4,
+                "medida": "O",
+                "nombre": "FR",
+                "save": true
+            }
+        ],
+        "created_at": "2022-04-14T23:09:40.047Z",
+        "updated_at": "2022-04-14T23:09:40.047Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6258a9b89737ade02770f8a8",
+        "id": 3,
+        "pines": [
+            4,
+            0
+        ],
+        "clave": "HG",
+        "isActive": false,
+        "seccion": 1,
+        "invernadero": 1,
+        "data": [],
+        "created_at": "2022-04-14T23:09:44.209Z",
+        "updated_at": "2022-04-15T04:28:38.402Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6258a9bc9737ade02770f8ac",
+        "id": 4,
+        "pines": [
+            5,
+            6
         ],
         "clave": "US",
         "isActive": true,
@@ -11,15 +154,36 @@
         "invernadero": 1,
         "data": [
             {
-                "id": 0,
-                "fecha": "2022/04/03",
-                "hora": "18:27",
+                "id": 1,
+                "fecha": "2022/04/15",
+                "hora": "00:00",
+                "valor": 5,
+                "medida": "M",
+                "nombre": "US",
+                "save": true
+            },
+            {
+                "id": 2,
+                "fecha": "2022/04/15",
+                "hora": "00:01",
+                "valor": 5,
+                "medida": "M",
+                "nombre": "US",
+                "save": true
+            },
+            {
+                "id": 3,
+                "fecha": "2022/04/15",
+                "hora": "00:02",
                 "valor": 5,
                 "medida": "M",
                 "nombre": "US",
                 "save": true
             }
         ],
-        "created_at": "2022/04/03  18:14:57",
-        "updated_at": "2022/04/03  18:14:57",
-        "save": 
+        "created_at": "2022-04-14T23:09:48.513Z",
+        "updated_at": "2022-04-14T23:09:48.513Z",
+        "store": true,
+        "__v": 0
+    }
+]
