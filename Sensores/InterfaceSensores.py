@@ -1,6 +1,7 @@
 from Sensores.ObjetoSensor import Sensores
 from Sensores.Data import DataSensor
-from Sensores.Sensores import LeerSensores
+#from Sensores.Sensores import LeerSensores
+from Sensores.CodeSensores import LeerSensores
 import datetime
 import os
 
@@ -209,7 +210,7 @@ class InterfaceSensor:
                     elif x.clave == 'TH':
                         if (int(date.strftime('%M')) + 5) % 5 == 0 and x.data[-1]['hora'] != date.strftime('%H:%M'):
                             valores = self.leerSensores.TH(x.pines)
-                            dataObjeto.valor = valores[0]
+                            dataObjeto.valor = valores['temperatura']
                             dataObjeto.id = ultimo
                             dataObjeto.fecha = date.strftime('%Y/%m/%d')
                             dataObjeto.hora = date.strftime('%H:%M')
@@ -220,7 +221,7 @@ class InterfaceSensor:
                             x.store = False
                             print(dataObjeto.nombre + ': ' + str(dataObjeto.valor))
                             self.objetoSensor.apiPutData(x.id, dataObjeto.__dict__)
-                            dataObjeto.valor = valores[1]
+                            dataObjeto.valor = valores['humedad']
                             dataObjeto.id = ultimo + 1
                             dataObjeto.fecha = date.strftime('%Y/%m/%d')
                             dataObjeto.hora = date.strftime('%H:%M')
