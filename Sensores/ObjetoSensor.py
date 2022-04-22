@@ -3,6 +3,7 @@ import pymongo
 import requests
 from requests.structures import CaseInsensitiveDict
 
+
 class Sensores(JsonFile):
     def __init__(self, id='', created_at='', updated_at='', pines=[], data=[], clave='', isActive=bool, seccion='', invernadero=1, store=bool, lista=list()):
         self.id = id
@@ -42,12 +43,14 @@ class Sensores(JsonFile):
                 Sensores(id=x['id'], pines=x['pines'], clave=x['clave'], isActive=x['isActive'], data=x['data'], seccion=x['seccion'], invernadero=x['invernadero'], store=x['store'], created_at=x['created_at'], updated_at=x['updated_at']))
         self.lista = lista
 
+
     def apiGet(self):
         try:
             path = "http://3.87.205.61:3333/sensores"
             headers = CaseInsensitiveDict()
             headers["Accept"] = "application/json"
-            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            token = self.Token()
+            headers["Authorization"] = "Bearer %s" % f"{token}"
             resp = requests.get(path, headers=headers)
             return resp.json()
         except:
@@ -58,7 +61,8 @@ class Sensores(JsonFile):
             path = "http://3.87.205.61:3333/sensores"
             headers = CaseInsensitiveDict()
             headers["Accept"] = "application/json"
-            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            token = self.Token()
+            headers["Authorization"] = "Bearer %s" % f"{token}"
             resp = requests.post(path, data=data, headers=headers)
             return resp.json()
         except:
@@ -69,7 +73,8 @@ class Sensores(JsonFile):
             path = f"http://3.87.205.61:3333/sensores/{id}"
             headers = CaseInsensitiveDict()
             headers["Accept"] = "application/json"
-            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            token = self.Token()
+            headers["Authorization"] = "Bearer %s" % f"{token}"
             resp = requests.put(path, data=data, headers=headers)
             print(resp.json())
             return resp.json()
@@ -81,7 +86,8 @@ class Sensores(JsonFile):
             path = f"http://3.87.205.61:3333/sensores/{id}"
             headers = CaseInsensitiveDict()
             headers["Accept"] = "application/json"
-            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            token = self.Token()
+            headers["Authorization"] = "Bearer %s" % f"{token}"
             resp = requests.delete(path, headers=headers)
             return resp.json()
         except:
@@ -92,7 +98,8 @@ class Sensores(JsonFile):
             path = f"http://3.87.205.61:3333/data/{id}"
             headers = CaseInsensitiveDict()
             headers["Accept"] = "application/json"
-            headers["Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+            token = self.Token()
+            headers["Authorization"] = "Bearer %s" % f"{token}"
             resp = requests.put(path, data=data, headers=headers)
             print(resp.json())
             return resp.json()
@@ -137,8 +144,8 @@ class Sensores(JsonFile):
                     path = f"http://3.87.205.61:3333/sensores/{x.id}"
                     headers = CaseInsensitiveDict()
                     headers["Accept"] = "application/json"
-                    headers[
-                        "Authorization"] = "Bearer %s" % "Mg.MnnF2guxIGxEmLmHCKJCQXNPa3fGrYduJFKQBPlBQVMWRJssbkLKTZetvzN2"
+                    token = self.Token()
+                    headers["Authorization"] = "Bearer %s" % f"{token}"
                     resp = requests.put(path,data=x, headers=headers)
                 except:
                     print('Fail')

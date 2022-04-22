@@ -238,6 +238,7 @@ class InterfaceSensor:
 
     def menuPrincipal(self):
         a = ""
+        self.objetoSensor.Token()
         while a != "x":
             self.cls()
             self.objetoSensor.Verificar()

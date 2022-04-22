@@ -1,188 +1,96 @@
 [
     {
-        "_id": "6258a9ac9737ade02770f89c",
+        "_id": "6262e8f3539d6d1c7ff1ebdb",
         "id": 0,
         "pines": [
-            1,
-            0
+            18,
+            12
         ],
-        "clave": "TH",
+        "clave": "US",
+        "nombre": "Ultrasonico",
         "isActive": true,
         "seccion": 1,
         "invernadero": 1,
-        "data": [
-            {
-                "id": 0,
-                "fecha": "2022/04/14",
-                "hora": "23:50",
-                "valor": 1,
-                "medida": "C",
-                "nombre": "TM",
-                "save": true
-            },
-            {
-                "id": 1,
-                "fecha": "2022/04/14",
-                "hora": "23:50",
-                "valor": 2,
-                "medida": "%",
-                "nombre": "HM",
-                "save": true
-            },
-            {
-                "id": 2,
-                "fecha": "2022/04/14",
-                "hora": "23:55",
-                "valor": 1,
-                "medida": "C",
-                "nombre": "TM",
-                "save": true
-            },
-            {
-                "id": 3,
-                "fecha": "2022/04/14",
-                "hora": "23:55",
-                "valor": 2,
-                "medida": "%",
-                "nombre": "HM",
-                "save": true
-            },
-            {
-                "id": 4,
-                "fecha": "2022/04/15",
-                "hora": "00:00",
-                "valor": 1,
-                "medida": "C",
-                "nombre": "TM",
-                "save": true
-            },
-            {
-                "id": 5,
-                "fecha": "2022/04/15",
-                "hora": "00:00",
-                "valor": 2,
-                "medida": "%",
-                "nombre": "HM",
-                "save": true
-            }
-        ],
-        "created_at": "2022-04-14T23:09:32.492Z",
-        "updated_at": "2022-04-14T23:09:32.492Z",
+        "image": "https://www.makercreativo.com/store/wp-content/uploads/2017/06/Sensor_ultrasonico_HCSR04_1.jpg",
+        "data": [],
+        "created_at": "2022-04-22T17:42:11.871Z",
+        "updated_at": "2022-04-22T17:42:11.871Z",
         "store": true,
         "__v": 0
     },
     {
-        "_id": "6258a9af9737ade02770f8a0",
+        "_id": "6262e8fe539d6d1c7ff1ebe0",
         "id": 1,
         "pines": [
-            2,
-            0
-        ],
-        "clave": "IR",
-        "isActive": false,
-        "seccion": 1,
-        "invernadero": 1,
-        "data": [],
-        "created_at": "2022-04-14T23:09:35.929Z",
-        "updated_at": "2022-04-14T23:10:01.855Z",
-        "store": true,
-        "__v": 0
-    },
-    {
-        "_id": "6258a9b49737ade02770f8a4",
-        "id": 2,
-        "pines": [
-            3,
-            0
-        ],
-        "clave": "FR",
-        "isActive": true,
-        "seccion": 1,
-        "invernadero": 1,
-        "data": [
-            {
-                "id": 1,
-                "fecha": "2022/04/14",
-                "hora": "23:55",
-                "valor": 4,
-                "medida": "O",
-                "nombre": "FR",
-                "save": true
-            },
-            {
-                "id": 2,
-                "fecha": "2022/04/15",
-                "hora": "00:00",
-                "valor": 4,
-                "medida": "O",
-                "nombre": "FR",
-                "save": true
-            }
-        ],
-        "created_at": "2022-04-14T23:09:40.047Z",
-        "updated_at": "2022-04-14T23:09:40.047Z",
-        "store": true,
-        "__v": 0
-    },
-    {
-        "_id": "6258a9b89737ade02770f8a8",
-        "id": 3,
-        "pines": [
-            4,
+            35,
             0
         ],
         "clave": "HG",
-        "isActive": false,
+        "nombre": "Humo y Gas",
+        "isActive": true,
         "seccion": 1,
         "invernadero": 1,
+        "image": "https://uelectronics.com/wp-content/uploads/AR0096-Sensor-de-Gas-v5.jpg",
         "data": [],
-        "created_at": "2022-04-14T23:09:44.209Z",
-        "updated_at": "2022-04-15T04:28:38.402Z",
+        "created_at": "2022-04-22T17:42:22.889Z",
+        "updated_at": "2022-04-22T17:42:22.889Z",
         "store": true,
         "__v": 0
     },
     {
-        "_id": "6258a9bc9737ade02770f8ac",
-        "id": 4,
+        "_id": "6262e909539d6d1c7ff1ebe4",
+        "id": 2,
         "pines": [
-            5,
-            6
+            29,
+            0
         ],
-        "clave": "US",
+        "clave": "IR",
+        "nombre": "Infrarrojo",
         "isActive": true,
         "seccion": 1,
         "invernadero": 1,
-        "data": [
-            {
-                "id": 1,
-                "fecha": "2022/04/15",
-                "hora": "00:00",
-                "valor": 5,
-                "medida": "M",
-                "nombre": "US",
-                "save": true
-            },
-            {
-                "id": 2,
-                "fecha": "2022/04/15",
-                "hora": "00:01",
-                "valor": 5,
-                "medida": "M",
-                "nombre": "US",
-                "save": true
-            },
-            {
-                "id": 3,
-                "fecha": "2022/04/15",
-                "hora": "00:02",
-                "valor": 5,
-                "medida": "M",
-                "nombre": "US",
-                "save": true
-            }
+        "image": "https://ae01.alicdn.com/kf/H1dd5a68952a04cdc90b75ea051613f7fE/Sensor-infrarrojo-de-m-dulo-de-evitaci-n-de-obst-culos-IR-de-reflexi-n-para.jpg_Q90.jpg_.webp",
+        "data": [],
+        "created_at": "2022-04-22T17:42:33.851Z",
+        "updated_at": "2022-04-22T17:42:33.851Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6262e915539d6d1c7ff1ebe8",
+        "id": 3,
+        "pines": [
+            20,
+            0
         ],
-        "created_at": "2022-04-14T23:09:48.513Z",
-        "updated_at": "2022-04-14T23:09:48.513Z",
+        "clave": "TH",
+        "nombre": "Temperatura y Humedad",
+        "isActive": true,
+        "seccion": 1,
+        "invernadero": 1,
+        "image": "https://makertronix.com/uploads/productos/81-ESEN-DHT11.jpg",
+        "data": [],
+        "created_at": "2022-04-22T17:42:45.017Z",
+        "updated_at": "2022-04-22T17:42:45.017Z",
+        "store": true,
+        "__v": 0
+    },
+    {
+        "_id": "6262e91f539d6d1c7ff1ebec",
+        "id": 4,
+        "pines": [
+            25,
+            0
+        ],
+        "clave": "FR",
+        "nombre": "Fotoresistencia",
+        "isActive": true,
+        "seccion": 1,
+        "invernadero": 1,
+        "image": "https://makertronix.com/uploads/productos/92-ESEN-LDR.jpg",
+        "data": [],
+        "created_at": "2022-04-22T17:42:55.978Z",
+        "updated_at": "2022-04-22T17:42:55.978Z",
         "store": true,
         "__v": 0
     }

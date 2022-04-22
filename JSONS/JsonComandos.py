@@ -13,6 +13,13 @@ class JsonFile:
             data = json.loads(file.read())
         return data
 
+    def Token(self):
+        data = ''
+        if (os.path.isfile("JSONS/Token.json")):
+            file = open("JSONS/Token.json", "r")
+            data = json.loads(file.read())
+        return data
+
     def toJson(self, lista):
         file = open(self.filename, "w")
         file = json.dump([ob.__dict__ for ob in lista], file, indent=4)

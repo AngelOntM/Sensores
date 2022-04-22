@@ -1,7 +1,7 @@
-import RPi.GPIO as GPIO
+'''import RPi.GPIO as GPIO
 import time
 from gpiozero import LightSensor
-import Adafruit_DHT
+import Adafruit_DHT'''
 
 
 
